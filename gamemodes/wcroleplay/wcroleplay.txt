@@ -1,0 +1,9 @@
+"wcroleplay"
+{
+	"base"		"base"
+	"title"		"CrimeLifeNetwork"
+	"maps"		"^rp_"
+	"menusystem"	"1"
+
+
+}

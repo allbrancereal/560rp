@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "burger/darksouls/blackbar"
+	"$translucent" 1
+	"$ignorez" "1"
+	"$vertexalpha" 1
+	"$vertexcolor" 1
+}
