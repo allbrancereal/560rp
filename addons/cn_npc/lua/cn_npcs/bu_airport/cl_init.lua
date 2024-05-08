@@ -1,7 +1,6 @@
 -- Set the name of the NPC. This will be displayed on the top of the panel.
-NPC.name = "Airport Secretary Triss"
+NPC.name = "Secretary Triss"
 
-NPC.model = "models/player/ratedr4ryan/triss_tw3.mdl"
 -- Uncomment to make the NPC sit.
 --NPC.sequence = "sit"
 local talkedTo = false;
@@ -150,7 +149,7 @@ function NPC:onBuy()
 	local _newTbl = {}
 	local _plyTbl = LocalPlayer():getShares(1);
 	
-	for k , v in pairs( BUSINESS_TABLE ) do
+	for k , v in pairs( BUISINESS_TABLE ) do
 		if v.ID == 1 then 
 		
 			_newTbl.cost = v.Price
@@ -171,7 +170,7 @@ function NPC:onBuy()
 		
 	for k , v in pairs( shareBuyTbl ) do
 		
-		if LocalPlayer():canAffordBank( _newTbl.cost * v.amt ) && LocalPlayer():getShares( 1 ).shares + v.amt <= fsrp.config.MaxAirportShares then 
+		if LocalPlayer():canAffordBank( _newTbl.cost * v.amt ) && LocalPlayer():getShares( 1 ).shares + v.amt <= MAX_AIRPORT_SHARES then 
 		
 		self:addOption( v.name , function()
 			

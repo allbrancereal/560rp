@@ -1,10 +1,7 @@
-
 -- This sets the model for the NPC.
-NPC.model = "models/virtual_youtuber/sister_cleaire/sister_cleaire_npc.mdl"
+NPC.model = "models/player/tfa_vi_dwyn.mdl"
 -- This is for player models that support player colors. The values range from 0-1.
 NPC.color = Vector(1, 0, 0)
-NPC.name = "Plastic Surgeon Dr. Rina Gading"
-NPC.reputation =2;
 
 -- Uncomment to make the NPC sit.
 --NPC.sequence = "sit"
@@ -23,24 +20,16 @@ function NPC:onEntityCreated(entity)
     --entity:Ignite(5)
 end
 
-
 function NPC:onAttemptSexChange( client )
 
-	if client:canAffordBank( fsrp.config.SexChangeCost ) then
+	if client:canAffordBank( SEX_CHANGE_COST ) then
 		
 		fsdb_changeSex( client )
-		client:addBank( -fsrp.config.SexChangeCost );
+		client:addBank( -SEX_CHANGE_COST );
 		client:Notify("Your sex has been changed")
 		
-	else
-	
-		client:Notify("You cannot afford this")
+		net.Start("refreshClientPM")
+		net.Send( client )
 	end
 
-end
-
-function NPC:onAcquireSkillpoints( client )
-
-	client:PurchaseSkillPoint()
-	
 end

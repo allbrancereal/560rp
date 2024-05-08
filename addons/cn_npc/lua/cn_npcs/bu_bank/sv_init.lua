@@ -1,11 +1,8 @@
 
-
 -- This sets the model for the NPC.
-NPC.model = "models/captainbigbutt/vocaloid/tda_kenzie.mdl"
-NPC.name = "Bank Secretary Elizabeth"
+NPC.model = "models/player/ratedr4ryan/yennefer_tw3.mdl"
 -- This is for player models that support player colors. The values range from 0-1.
 NPC.color = Vector(1, 0, 0)
-NPC.reputation =3;
 
 -- Uncomment to make the NPC sit.
 --NPC.sequence = "sit"
@@ -59,49 +56,36 @@ function NPC:ontransferallMoney( client, bool )
 end
 
 function NPC:onsetbankaccountType( client , int )
-	local toHit = client;
+
+	if !client:IsOnQuest( 1 ) then
 	
-	for k , v in pairs( player.GetAll() ) do
+		client:RewardQuest( 1 );
 	
-		if v == client then
-		
-			toHit = v;
-			
-		end
-		
-	end
-	
-	if !toHit then return end
-	
-	if !toHit:IsOnQuest( 1 ) then
-	
-		toHit:RewardQuest( 1 , toHit:getFlag("questTable", nil ) );
-	
-		toHit:setBankAccount( int );
 	
 	else	
 	
 
 	
-	if toHit:getBankAccount() != 0 && toHit:canAffordBank( fsrp.config.BankAccountChangeCost ) then
+	if client:getBankAccount() != 0 && client:canAffordBank( 25000 ) then
 	
-		toHit:setBankAccount( int );
-		toHit:addBank( -fsrp.config.BankAccountChangeCost )
-		toHit:Notify("You have been charged $" .. fsrp.config.BankAccountChangeCost .." for changing your bank account type")
+		client:setBankAccount( int );
+		client:Notify("You have been charged $25,000 for changing your bank account type")
+	else
+	
+		client:setBankAccount( int );
 		
 	end
 	
-		fsdb_saveClient( toHit )
 	end
 end
 function NPC:onquestTut_1_step_2( client ) 
 
-	client:AdvanceQuestStep( 1)
+	client:SetQuestStep( 1 , 2 )
 
 end
 function NPC:onquestTut_1( client )
 
-	if !client:getFlag("questTable",{})[1] then
+	if !client:IsOnQuest( 1 ) then
 	
 		client:StartQuest( 1 )
 		

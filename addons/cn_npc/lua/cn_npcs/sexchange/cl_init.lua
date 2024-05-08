@@ -1,28 +1,25 @@
 
 NPC = NPC or {}
 -- Set the name of the NPC. This will be displayed on the top of the panel.
-NPC.name = "Plastic Surgeon Dr. Rina Gading"
-NPC.model = "models/virtual_youtuber/sister_cleaire/sister_cleaire_npc.mdl"
+NPC.name = "Janet Stirling"
 
 -- Uncomment to make the NPC sit.
 --NPC.sequence = "sit"
-NPC.reputation =2;
 
 local str = "";
 -- This is the function that gets called when the player presses <E> on the NPC.
 function NPC:onStart()
 	-- self:addText(<text>) adds text that comes from the NPC.
 	self:addText("Hey there! Welcome to Gender-Switcho-Rama! You can change your gender ez-pz here!") 
-	if LocalPlayer():Team() == TEAM_CIVILLIAN then
 
 	-- self:addOption(<text>, <callback>) is a button that you can pick and it will
 	-- run the callback function.
 	
 	self:addOption("Hello! How much would one of these operations cost?", function()
 		-- This code is inside a function that gets ran after pressing the option.
-		self:addText("We are happy to spike your interest, a operation is merely the price of " .. fsrp.config.SexChangeCost .. "$" )
+		self:addText("We are happy to spike your interest, a operation is merely the price of " .. SEX_CHANGE_COST .. "$" )
 
-		if LocalPlayer():canAffordBank( fsrp.config.SexChangeCost ) then
+		if LocalPlayer():canAffordBank( SEX_CHANGE_COST ) then
 			
 			if LocalPlayer():getGender() == 1 then
 			
@@ -76,61 +73,13 @@ function NPC:onStart()
 		end
 		
 	end)
-	end
 	
-	self:DoAnythingElse()
-
-	self:addLeave("I've got no time for this. <Leave>")
-	
-
-end
-
-function NPC:DoAnythingElse()
-	
-		
-		local _p = LocalPlayer();
-		
-		local _skillTable = _p:GetSkillTable()
-		
-		local _TotalPoints = 0;
+	self:addOption("I haven't got the time for this.", function()
+			-- This code is inside a function that gets ran after pressing the option.
+		self:addText("Bye! You can always come back!")
 			
-		for k , v in pairs( _skillTable ) do
-			
-			_TotalPoints = _TotalPoints + v;
-			
-		end
-		
-		if _p:CanBuySkillPoint() then
-		
-		
-			if _TotalPoints > 0 then
-				
-				self:addText("Skillpoints, please")
-				
-				self:DoAcquireSkill()
-						
-			
-			else
-
-				if _p:canAfford( skillpoint_Helper_GetSkillpointCost( _p ) ) || _p:canAffordBank( skillpoint_Helper_GetSkillpointCost( _p ) ) then
-				
-					self:addOption("Please give me a skill point ($" .. skillpoint_Helper_GetSkillpointCost( _p ) .. ")" , function ( )
-					
-						self:send( "AcquireSkillpoints" )
-					
-					end )					
-					
-				end
-				
-				
-			
-			end
-	
-		
-		
-		end
-		
-	
+		self:addLeave("<Leave>")
+	end)
 
 end
 
@@ -211,16 +160,19 @@ function NPC:confirmOperation(str)
 	
 		if string.lower( opentextboxmytext:GetValue() ) == "yes" then
 			
-			self:addText("Your operation should be done!") 
-		
-			self:addOption( "Thank you for this." , function( )
-			
-				self:send( "AttemptSexChange" )
-				self:addLeave("<Leave>")
+			timer.Simple( 5, function()
+				self:addText("Your operation should be done!") 
 				
+					self:addOption( "Thank you for this." , function( )
+					
+						self:send( "AttemptSexChange" )
+						self:addLeave("<Leave>")
+						
+						
+					end)
 				
 			end)
-				
+			
 			opentextboxmain:Close()
 			opentextboxbg:Close()
 			textOpen = false
@@ -231,32 +183,8 @@ function NPC:confirmOperation(str)
 
 end
 
+net.Receive( "refreshClientPM" , function( _l , _p )
 
-function NPC:DoAcquireSkill()
+	LoadHud()
 
-	local _p = LocalPlayer();
-	
-	self:addOption("Okay, sure. Give me more.. ($" .. skillpoint_Helper_GetSkillpointCost( _p ) .. ")" , function ( )
-					
-		self:send( "AcquireSkillpoints" )
-						
-		self:AnotherSkillpoint( _p )
-					
-	end )		
-			
-	self:addLeave( "<Leave>" )
-					
-end
-
-function NPC:AnotherSkillpoint( _p )
-
-
-	self:addOption("Okay, sure. Give me more.. ($" .. skillpoint_Helper_GetSkillpointCost( _p ) .. ")" , function ( )
-					
-		self:send( "AcquireSkillpoints" )
-						
-		self:addLeave( "<Leave>" )
-					
-	end )	
-	
-end
+end )

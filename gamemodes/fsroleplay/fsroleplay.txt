@@ -1,0 +1,9 @@
+"fsroleplay"
+{
+	"base"		"base"
+	"title"		"560Roleplay"
+	"maps"		"^rp_"
+	"menusystem"	"1"
+
+
+}

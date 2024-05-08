@@ -1,6 +1,5 @@
 -- Set the name of the NPC. This will be displayed on the top of the panel.
 NPC.name = "Mysterious Slav"
-NPC.model = "models/gtaiv/characters/niko.mdl"
 
 -- Uncomment to make the NPC sit.
 --NPC.sequence = "sit"
@@ -29,7 +28,7 @@ function NPC:onStart()
 		end )
 	
 	end )
-	elseif !LocalPlayer():IsOnQuest(3) then
+	elseif !LocalPlayer().__activeQuests[3] || !LocalPlayer():IsOnQuest(3) then
 	
 		self:addOption("Tutorial #3", function ( )
 		
@@ -45,19 +44,21 @@ function NPC:onStart()
 					self:BuisinessOwner()
 			
 				end)
-								self:addLeave("<Leave> I have heard enough of your blasphimy, begone.")	
-
+				
 			end ) 
-						self:addLeave("<Leave> I have heard enough of your blasphimy, begone.")	
-
+		
 		
 		end )
 	
-					self:addLeave("<Leave> I have heard enough of your blasphimy, begone.")	
-
+	
 	
 	end
-	
+		self:addOption("I have heard enough of your blasphimy, begone.", function()
+		
+			self:addText("Okay, that was rude. I'm willing to put that aside for next time.")
+			
+			self:addLeave("<Leave>")
+		end)	
 end
 
 function NPC:InfoHowBu()
@@ -71,8 +72,12 @@ function NPC:InfoHowBu()
 			self:InfoHowBu()
 		
 		end)
-				self:addLeave("<Leave> I have heard enough of your blasphimy, begone.")	
-
+		self:addOption("I have heard enough of your blasphimy, begone.", function()
+		
+			self:addText("Okay, that was rude. I'm willing to put that aside for next time.")
+			
+			self:addLeave("<Leave>")
+		end)	
 	end)
 			
 	self:addOption( "I would like to know about banking with a buisiness." , function ()
@@ -83,8 +88,12 @@ function NPC:InfoHowBu()
 			self:InfoHowBu()
 		
 		end)
-				self:addLeave("<Leave> I have heard enough of your blasphimy, begone.")	
-	
+		self:addOption("I have heard enough of your blasphimy, begone.", function()
+		
+			self:addText("Okay, that was rude. I'm willing to put that aside for next time.")
+			
+			self:addLeave("<Leave>")
+		end)	
 	end)
 		
 	self:addOption( "I would like to know about how to get a buisiness.", function ()
@@ -95,34 +104,47 @@ function NPC:InfoHowBu()
 			self:addOption("I would like to know more about buying a buisiness share from you.", function()
 				
 				self:addText("I guess we can work something out then! (Niko smiles with enthusiasm)")
+				timer.Simple( 1 , function()
 					
 					self:addText("What buisiness would you like to invest in?")
 					self:BuisinessOwner()
 				end)
 			
+			end )
 		end
 		self:addOption("I would like to know more about something else.", function()
 			self:InfoHowBu()
 		
 		end)
-				self:addLeave("<Leave> I have heard enough of your blasphimy, begone.")	
+		self:addOption("I have heard enough of your blasphimy, begone.", function()
+		
+			self:addText("Okay, that was rude. I'm willing to put that aside for next time.")
+			
+			self:addLeave("<Leave>")
+		end)		
 	end)
 		
-				self:addLeave("<Leave> I have heard enough of your blasphimy, begone.")	
+		self:addOption("I have heard enough of your blasphimy, begone.", function()
+		
+			self:addText("Okay, that was rude. I'm willing to put that aside for next time.")
+			
+			self:addLeave("<Leave>")
+		end)		
 end
 
 
 function NPC:BuisinessOwner( )
 	local _newTbl = {}
-	local _pBs = LocalPlayer():getAllBusinesses();
-	for k , v in pairs( BUSINESS_TABLE ) do
-		
+	
+	for k , v in pairs( BUISINESS_TABLE ) do
+		if LocalPlayer().__BuisinessTable[v.ID].id == v.ID then
 		
 		_newTbl[v.ID] = {}
 		_newTbl[v.ID].ID = v.ID
 		_newTbl[v.ID].Price = v.Price
 		_newTbl[v.ID].Name	= v.Name
 	
+		end
 	end
 	
 	self:addText("Just so you know, I only take cheque or credit from the bank, I do not deal with cash!")
@@ -130,7 +152,7 @@ function NPC:BuisinessOwner( )
 		self:addOption("Buisinesses..", function( )
 		
 		
-				if !LocalPlayer():IsOnQuest( 3 ) then 
+				if LocalPlayer().__activeQuests[3] && !LocalPlayer():IsOnQuest( 3 ) then 
 										
 					self:send("queststep2")
 						
@@ -153,7 +175,13 @@ function NPC:BuisinessOwner( )
 				
 					
 					
-				self:addLeave("<Leave> I actually do not want to invest in a buisiness.")	
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
 							
 				end)
 				end
@@ -173,7 +201,13 @@ function NPC:BuisinessOwner( )
 				
 					
 					
-				self:addLeave("<Leave> I actually do not want to invest in a buisiness.")	
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
 							
 				end)
 				
@@ -194,7 +228,14 @@ function NPC:BuisinessOwner( )
 				
 					
 					
-				self:addLeave("<Leave> I actually do not want to invest in a buisiness.")	
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
+							
 				end)
 				end
 				if LocalPlayer():getShares( 4 ).shares < 1 then
@@ -213,7 +254,13 @@ function NPC:BuisinessOwner( )
 				
 					
 					
-				self:addLeave("<Leave> I actually do not want to invest in a buisiness.")	
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
 							
 				end)
 				if LocalPlayer():getShares( 5 ).shares < 1 then
@@ -232,7 +279,13 @@ function NPC:BuisinessOwner( )
 				
 					
 					
-				self:addLeave("<Leave> I actually do not want to invest in a buisiness.")	
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
 							
 				end)
 				end
@@ -250,7 +303,15 @@ function NPC:BuisinessOwner( )
 							
 					end)
 				
-				self:addLeave("<Leave> I actually do not want to invest in a buisiness.")	
+					
+					
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
 							
 				end)
 				end
@@ -269,7 +330,14 @@ function NPC:BuisinessOwner( )
 					end)
 				
 					
-				self:addLeave("<Leave> I actually do not want to invest in a buisiness.")	
+					
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
 							
 				end)
 				end
@@ -289,7 +357,13 @@ function NPC:BuisinessOwner( )
 				
 					
 					
-				self:addLeave("<Leave> I actually do not want to invest in a buisiness.")	
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
 							
 				end)
 				end
@@ -309,11 +383,42 @@ function NPC:BuisinessOwner( )
 				
 					
 					
-				self:addLeave("<Leave> I actually do not want to invest in a buisiness.")	
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
 							
 				end)
 				end
-
+				if LocalPlayer():getShares( 2 ).shares < 1 then
+		
+				self:addOption("Starting Share ( Bank, $225)", function ( )
+							
+						net.Start("buyInitialShare")
+							net.WriteInt( 2, 8 )
+						net.SendToServer()
+							
+					self:addOption("I would like to buy something else.", function()
+							
+						self:BuisinessOwner()
+							
+					end)
+				
+					
+					
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
+							
+				end)
+		end
 		
 				if LocalPlayer():getShares( 10 ).shares < 1 then
 		
@@ -331,14 +436,20 @@ function NPC:BuisinessOwner( )
 				
 					
 					
-				self:addLeave("<Leave> I actually do not want to invest in a buisiness.")	
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
 							
 				end)
 				
 				end
 				if LocalPlayer():getShares( 11 ).shares < 1 then
 		
-				self:addOption("Starting Share Strip Club ( Strip Club, $40)", function ( )
+				self:addOption("Starting Share ( Bank, $40)", function ( )
 							
 						net.Start("buyInitialShare")
 							net.WriteInt( 11, 8 )
@@ -352,7 +463,13 @@ function NPC:BuisinessOwner( )
 				
 					
 					
-				self:addLeave("<Leave> I actually do not want to invest in a buisiness.")	
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
 							
 				end)
 				
@@ -373,8 +490,13 @@ function NPC:BuisinessOwner( )
 				
 					
 					
-						self:addLeave("<Leave> I actually do not want to invest in anything.")	
-
+					self:addOption("I actually do not want to invest in a buisiness.", function()
+								
+						self:addText("Okay. I'm always here if you want to invest!")
+									
+						self:addLeave("<Leave>")
+								
+					end)
 							
 				end)
 				
@@ -385,7 +507,12 @@ function NPC:BuisinessOwner( )
 		self:InfoHowBu()
 		
 	end)
-
-	self:addLeave("<Leave> I actually do not want to invest in anything.")	
+	self:addOption("I actually do not want to invest in anything.", function()
+		
+		self:addText("Okay. I'm always here if you want to invest!")
+			
+		self:addLeave("<Leave>")
+		
+	end)		
 end
 

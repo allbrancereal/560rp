@@ -1,7 +1,4 @@
-
 -- This sets the model for the NPC.
-NPC.name = "Airport Secretary Triss"
-
 NPC.model = "models/player/ratedr4ryan/triss_tw3.mdl"
 -- This is for player models that support player colors. The values range from 0-1.
 NPC.color = Vector(1, 0, 0)

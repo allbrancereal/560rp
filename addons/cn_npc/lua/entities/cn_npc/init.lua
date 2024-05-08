@@ -17,7 +17,7 @@ function ENT:Initialize()
 	self:DrawShadow(true)
 	self:SetSolid(SOLID_BBOX)
 	self:PhysicsInit(SOLID_BBOX)
-	self:SelectWeightedSequence( ACT_IDLE)
+
 	self.receivers = {}
 
 	local physObj = self:GetPhysicsObject()
@@ -39,38 +39,28 @@ function ENT:Initialize()
 	    	info:onEntityCreated(self)
 	    end
 	end)
-	
 end
 
 function ENT:Interact(activator)
 	if (!self:GetQuest()) then
-		return 
+		return
 	end
 	
 	local info = cnQuests[self:GetQuest()]
 
 	if (info) then
-
-		if info.reputation && !activator:KnowsReputation( info.reputation ) then
-		
-			activator:DiscoverReputation( info.reputation )
-			//activator:ChatPrint( "You are now " .. PlayerReputations.config.Reputations[info.reputation].levels[PlayerReputations.config.Reputations[info.reputation].startlv][1] .. " with " .. PlayerReputations.config.Reputations[info.reputation].name )
-		end
-
 		if (info.customUse) then
 			if (!info:customUse(activator, self)) then
-				return 
+				return
 			end
 		end
 
-			activator.cnQuest = self
-/*
 		if (!IsValid(activator.cnQuest)) then
 			activator.cnQuest = self
 		else
-			return 
+			return
 		end
-*/
+
 		net.Start("npcOpen")
 			net.WriteUInt(self:EntIndex(), 14)
 		net.Send(activator)

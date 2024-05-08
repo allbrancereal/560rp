@@ -14,13 +14,13 @@ net.Receive("npcOpen", function()
 	local entity = Entity(index)
 
 	if (!IsValid(entity)) then
-		return print("cnquest error 1 ")
+		return
 	end
 
 	local uniqueID = entity:GetQuest()
 	
 	if (!cnQuests[uniqueID]) then
-		return print("cnquest error 2 ")
+		return
 	end
 
 	if (cnQuests[uniqueID].shop) then
@@ -35,7 +35,7 @@ net.Receive("npcOpen", function()
 		cnPanels.quest:setup(uniqueID)
 
 		if (cnQuests[uniqueID].onStart) then
-			cnQuests[uniqueID]:onStart(entity)
+			cnQuests[uniqueID]:onStart()
 		end
 	end
 end)

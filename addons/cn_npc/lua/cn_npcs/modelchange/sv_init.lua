@@ -1,11 +1,8 @@
-
 -- This sets the model for the NPC.
-NPC.model = "models/captainbigbutt/vocaloid/tda_kenzie.mdl"
+NPC.model = "models/player/tfa_vi_vella_mgo.mdl"
 -- This is for player models that support player colors. The values range from 0-1.
 NPC.color = Vector(1, 0, 0)
-NPC.name = "Facial Specialist Katrina"
 
-NPC.reputation =5;
 -- Uncomment to make the NPC sit.
 --NPC.sequence = "sit"
 
@@ -25,26 +22,26 @@ end
 
 function NPC:onStartQuestTut_2( client )
 
-	if !client:getFlag("questTable",{})[2] then
+	if !client:IsOnQuest( 2 ) then
 	
 		client:StartQuest( 2 )
 		
 	end
 
 end
-function NPC:onrequestModelChange( client )
 
-	client:EnterModelShop()
-
-end
-function NPC:onplayermdlmanager( client )
+function NPC:onplayermdlmanager( client,  bool )
 	
-	client:EnterModelShop()
+	
+		net.Start("verifyclientgender")
+
+			net.WriteBool( bool )
+		net.Send( client )
 		
 end
 
 function NPC:onStartQuestTut_2_Step2( client )
 
-	client:AdvanceQuestStep( 2)
+	client:SetQuestStep( 2 , 2 )
 	
 end

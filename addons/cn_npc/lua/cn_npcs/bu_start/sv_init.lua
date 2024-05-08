@@ -1,8 +1,5 @@
-
 -- This sets the model for the NPC.
 NPC.model = "models/gtaiv/characters/niko.mdl"
-NPC.name = "Mysterious Slav"
-
 -- This is for player models that support player colors. The values range from 0-1.
 NPC.color = Vector(1, 0, 0)
 
@@ -25,7 +22,8 @@ end
 
 function NPC:onStartTutorial3( client )
 	
-	if !client:getFlag("questTable",{})[3] then
+	if !client.__activeQuests[3] || !client:IsOnQuest( 3 ) then
+	
 		client:StartQuest( 3 );
 		
 	end
@@ -33,6 +31,6 @@ function NPC:onStartTutorial3( client )
 end
 function NPC:onqueststep2( client )
 	if !client:IsOnQuest(3) then
-		client:AdvanceQuestStep( 3)
+		client:SetQuestStep( 3 , 2 )
 	end
 end

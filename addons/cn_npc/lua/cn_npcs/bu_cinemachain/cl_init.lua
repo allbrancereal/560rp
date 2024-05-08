@@ -1,6 +1,5 @@
 -- Set the name of the NPC. This will be displayed on the top of the panel.
-NPC.name = "Cinema Secretary Aisa"
-NPC.model = "models/player/asia_heleana.mdl"
+NPC.name = "Secretary Aisa"
 
 -- Uncomment to make the NPC sit.
 --NPC.sequence = "sit"
@@ -140,7 +139,7 @@ function NPC:onBuyCinema()
 	local _newTbl = {}
 	local _plyTbl = LocalPlayer():getShares(3);
 	
-	for k , v in pairs( BUSINESS_TABLE ) do
+	for k , v in pairs( BUISINESS_TABLE ) do
 		if v.ID == 3 then 
 		
 			_newTbl.cost = v.Price
@@ -161,7 +160,7 @@ function NPC:onBuyCinema()
 		
 	for k , v in pairs( shareBuyTbl ) do
 		
-		if LocalPlayer():canAffordBank( _newTbl.cost * v.amt ) && LocalPlayer():getShares( 3 ).shares + v.amt <= fsrp.config.MaxCinemaShares then 
+		if LocalPlayer():canAffordBank( _newTbl.cost * v.amt ) && LocalPlayer():getShares( 3 ).shares + v.amt <= MAX_CINEMA_SHARES then 
 		
 		self:addOption( v.name , function()
 

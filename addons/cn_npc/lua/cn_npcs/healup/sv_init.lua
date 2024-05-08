@@ -1,11 +1,8 @@
-
 -- This sets the model for the NPC.
-NPC.model = "models/sentry/gtav/mexican/mexboss1pm.mdl"
+NPC.model = "models/player/ratedr4ryan/ciri_tw3.mdl"
 -- This is for player models that support player colors. The values range from 0-1.
 NPC.color = Vector(1, 0, 0)
-NPC.name = "Doctor Serah"
 
-NPC.reputation =2;
 -- Uncomment to make the NPC sit.
 --NPC.sequence = "sit"
 
@@ -33,7 +30,7 @@ function NPC:onresetHP( client )
 	
 	elseif _hp <= 74 && _hp >=51 then
 	
-		if client:canAfford( fsrp.config.HealthResetCost ) then
+		if client:canAfford( HEALTH_RESET_COST ) then
 		
 			client:SetHealth( 100 )
 	
@@ -42,14 +39,6 @@ function NPC:onresetHP( client )
 	elseif _hp <= 50 && _hp > 0 then
 
 		client:SetHealth( 100 )
-		
-	end
-	
-	if client.__Crippled then
-	
-		client.__Crippled = false;
-		client:SetWalkSpeed(fsrp.config.WalkSpeed);
-		cleitn:SetRunSpeed(fsrp.config.RunSpeed);
 		
 	end
 	

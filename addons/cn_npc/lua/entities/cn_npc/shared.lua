@@ -8,28 +8,30 @@
 ENT.Type = "anim"
 ENT.PhysgunDisable = true
 ENT.PhysgunDisabled = true
-ENT.AutomaticFrameAdvance  =true
+
 function ENT:setAnim()
     local uniqueID = self:GetQuest()
     local custom = uniqueID and cnQuests[uniqueID] and cnQuests[uniqueID].sequence
-    
-   --if (custom) then
-        --custom = custom:lower()
-    if self:GetSequenceList()[custom] then
-    	return self:ResetSequence(self:GetSequenceList()[custom])
+
+    if (custom) then
+        custom = custom:lower()
+
+        for k, v in ipairs(self:GetSequenceList()) do
+            if (v:lower():find(custom)) then
+                return self:ResetSequence(k)
+            end
+        end
     end
+
 	for k, v in ipairs(self:GetSequenceList()) do
 		if (v:lower():find("idle") and v != "idlenoise") then
 			return self:ResetSequence(k)
 		end
-	end 
-	
+	end
 
-	self:ResetSequence(3)
-
+	self:ResetSequence(4)
 end
 
 function ENT:SetupDataTables()
 	self:NetworkVar("String", 0, "Quest")
 end
-

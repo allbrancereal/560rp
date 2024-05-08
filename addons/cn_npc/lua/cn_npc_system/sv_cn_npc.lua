@@ -27,10 +27,10 @@ cnNPCSaveQuests = saveQuests
 
 local function loadNPCs()
 	local encoded = file.Read("cnrp/quests/"..game.GetMap()..".txt", "DATA")
+
 	if (encoded) then
 		local decoded = util.JSONToTable(encoded)
-		for k , v in pairs(ents.FindByClass("cn_npc")) do v:Remove() end
-	
+
 		if (decoded) then
 			for k, v in ipairs(decoded) do
 				local data = cnQuests[v[3]]
@@ -39,8 +39,7 @@ local function loadNPCs()
 					if (data.gamemode and data.gamemode:lower() != engine.ActiveGamemode():lower()) then
 						continue
 					end
-					
-					
+
 					local entity = ents.Create("cn_npc")
 					entity:SetPos(v[1])
 					entity:SetAngles(v[2])
@@ -48,7 +47,6 @@ local function loadNPCs()
 					entity:SetModel(data.model)
 					entity:SetQuest(v[3])
 					entity:setAnim()
-					if data.reputation then entity:SetEntityReputation( data.reputation ) end;
 				end
 			end
 		end
@@ -113,7 +111,6 @@ concommand.Add("cn_createnpc", function(client, command, arguments)
 	entity:SetModel(data.model)
 	entity:SetQuest(uniqueID)
 	entity:setAnim()
-	if data.reputation then entity:SetEntityReputation( data.reputation ) end;
 
 	saveQuests()
 end)

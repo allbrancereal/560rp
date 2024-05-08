@@ -1,7 +1,5 @@
-
 -- This sets the model for the NPC.
 NPC.model = "models/player/asia_heleana.mdl"
-NPC.name = "Cinema Secretary Aisa"
 -- This is for player models that support player colors. The values range from 0-1.
 NPC.color = Vector(1, 0, 0)
 

@@ -3,22 +3,22 @@
 	Do not re-distribute without author's permission.
 
 	Revision f59168a397dba8e36c56a2b029ce5f6b2e7545853cd1e8cd533b97d1aa2b08c2
---]] 
+--]]
 
 cnQuests = cnQuests or {}
 
 local _, folders = file.Find("cn_npcs/*", "LUA")
+
 for k, v in ipairs(folders) do
 	NPC = {uniqueID = v}
 		if (SERVER) then
 			include("cn_npcs/"..v.."/sv_init.lua")
 			AddCSLuaFile("cn_npcs/"..v.."/cl_init.lua")
-		elseif CLIENT then
+		else
 			include("cn_npcs/"..v.."/cl_init.lua")
-		end 
+		end
 
 		if (SERVER) then
-
 			function NPC:send(client, uniqueID, ...)
 				local entity = client.cnQuest
 

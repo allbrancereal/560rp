@@ -1,7 +1,6 @@
 -- Set the name of the NPC. This will be displayed on the top of the panel.
-NPC.name = "Market Secretary D.va"
+NPC.name = "Secretary D.va"
 
-NPC.model = "models/characters/tfa_seds_ow_dva.mdl"
 -- Uncomment to make the NPC sit.
 --NPC.sequence = "sit"
 local talkedTo = false;
@@ -159,7 +158,7 @@ function NPC:onBuyFarmersMarket()
 	local _newTbl = {}
 	local _plyTbl = LocalPlayer():getShares(4);
 	
-	for k , v in pairs( BUSINESS_TABLE ) do
+	for k , v in pairs( BUISINESS_TABLE ) do
 		if v.ID == 4 then 
 		
 			_newTbl.cost = v.Price
@@ -180,7 +179,7 @@ function NPC:onBuyFarmersMarket()
 		
 	for k , v in pairs( shareBuyTbl ) do
 		
-		if LocalPlayer():canAffordBank( _newTbl.cost * v.amt ) && LocalPlayer():getShares( 4 ).shares + v.amt <= fsrp.config.MaxFarmerShares then 
+		if LocalPlayer():canAffordBank( _newTbl.cost * v.amt ) && LocalPlayer():getShares( 4 ).shares + v.amt <= MAX_FARMER_SHARES then 
 		
 		self:addOption( v.name , function()
 

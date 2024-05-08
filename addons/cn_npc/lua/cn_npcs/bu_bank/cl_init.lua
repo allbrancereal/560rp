@@ -1,8 +1,5 @@
-
-NPC.reputation =3;
-NPC.model = "models/captainbigbutt/vocaloid/tda_kenzie.mdl"
 -- Set the name of the NPC. This will be displayed on the top of the panel.
-NPC.name = "Bank Secretary Elizabeth"
+NPC.name = "Secretary Yennefer"
 
 -- Uncomment to make the NPC sit.
 --NPC.sequence = "sit"
@@ -10,32 +7,30 @@ local talkedTo = false;
 local _i = 1;
 -- This is the function that gets called when the player presses <E> on the NPC.
 function NPC:onStart()
-	local _acnt =  LocalPlayer():getBankAccount();
 	
 	-- This code is inside a function that gets ran after pressing the option.
 	if !talkedTo then
-		self:addText("Welcome to the Bank! How are you? (Elizabeth Smiles)")
+		self:addText("Welcome to the Bank! How are you? (Yennefer Smiles)")
 	elseif talkedTo then
 		self:addText("What can I do for you?")
 	end
-	local _finished, _lfinished = LocalPlayer():FinishedQuest( 1 );
-
-	if !_finished && LocalPlayer():getBankAccount() < 1 then
-					
-								
-				self:addOption("Quest 1", function ( )
+	if !LocalPlayer().__activeQuests[1] || !LocalPlayer():IsOnQuest( 1 ) then
+	
+			self:addOption( "(Quest) Tutorial #1" , function ( )
+			
+				
+				self:addText("So you would like to know how I can reward you?")
+				
+				self:addOption("Yes! What would you like me to do?", function ( )
 				
 					self:send( "questTut_1" )
 					
-					self:addText( "Make a bank account and I will reward you with cash.")
+					self:addText( "Simple! You just have to make a bank account and I will reward you with some cash!")
 					
 					self:addOption( "I will do that! Thank you (Smile)", function ( )
 						self:send( "questTut_1_step_2" )
-						
-						timer.Simple(1,function()
-							if !self then return end
-							self:MakeBankAccount( 0 )
-						end)
+						self:MakeBankAccount( 0 )
+					
 					end )
 					
 					self:addOption("I am not interested. Thank you for the forum.", function ()
@@ -45,18 +40,18 @@ function NPC:onStart()
 					end)
 				end)
 				
-	end
+			end)
 			
+	end
 	
-	
-	if _acnt > 0 then
+	if LocalPlayer():getBankAccount() > 0 then
 		
 		if LocalPlayer():getMoney() >= 100 || LocalPlayer():getBank() >= 100 then
 			if _i == 1 then
 			
 			self:addOption( "I would like to get some banking done.", function ( )
 				talkedTo = true;
-					self:CheckBank()
+				self:CheckBank()
 				
 			end )
 			
@@ -64,8 +59,7 @@ function NPC:onStart()
 			
 			self:addOption( "I would like to get some banking done.", function ( )
 				talkedTo = true;
-					self:CheckBankProceed(0)
-				
+				self:CheckBankProceed(0)
 				
 			end )
 			
@@ -73,17 +67,15 @@ function NPC:onStart()
 		end
 		
 		
-		if LocalPlayer():canAffordBank( fsrp.config.BankAccountChangeCost ) then
+		if LocalPlayer():canAffordBank( 25000 ) then
 		
-			self:addOption( "I would like to change my bank account (Cost: $" .. fsrp.config.BankAccountChangeCost .. ")", function ( )
+			self:addOption( "I would like to change my bank account (Cost: $25000)", function ( )
 				talkedTo = true;
-					self:MakeBankAccount( 1 )
+				self:MakeBankAccount( 1 )
 				
 				self:addOption("Nevermind.", function()
 					-- self:addLeave(<leave text>) adds a button that closes the dialogue.
-
 					self:onStart()
-				
 				end )
 		
 			end )
@@ -91,43 +83,80 @@ function NPC:onStart()
 		end
 	end
 	
+		if LocalPlayer():getBankAccount() == 3 && LocalPlayer():getShares( 2 ).shares >0 then
 			
-		if _acnt == 3 then
-		
-			self:addOption( "How can I buy a investment?", function ()
-				timer.Simple(1,function()
-					if !self then return end
-				self:addText( "You can buy a investment at the realtor, this will generate passive income." )
-				
-				
-				self:addOption("I would like some more information.", function()
-					
-					timer.Simple(1,function()
-						if !self then return end
-					self:onStart()
-					end)
-				end )
 			
-				self:addLeave("<Leave> Ok. thank you!")
-				end)
+			self:BuisinessOwner()
 			
-			end )
-		
 		end
 		
 		
-		self:addLeave("<Leave> No, thank you.")
+		
+		
+	
+		local _str = "I am good, what is this place?";
+		self:addOption( _str , function()
+			talkedTo = true;
+			
+			self:addText("This is the bank, You can manage this buisiness if you were the owner or make deposits and take out cash!")
+			self:addText("Would you like to make an account?")
+					
+			self:addOption( "Why do I need to make an account?" , function( )
+			
+				self:addText("You need to make a bank account to manage what type of transactions you do.")
+				
+				
+					self:addOption( "I would like to open a bank account.", function()
+						self:MakeBankAccount( 0 )
+					
+					end )
+					
+					self:addOption("I am not interested. Thank you for the forum.", function ()
+						self:addText("Come back any time you want to make an account!")
+						self:addLeave("<Leave>")
+						
+					end)
+					
+				end )
+				
+			end )
+			
+			self:addOption( "How can I buy a share?", function ()
+				self:addText( "You can buy a share by visiting the Mysterious Slav at the Stock Exchange. You also are required to own a Buisiness Account." )
+				
+				
+				self:addOption("I would like some more information.", function()
+				
+					self:onStart()
+					
+				end)
+				
+				self:addOption( "I would like to open a account then.", function()
+					self:MakeBankAccount( 0 )
+					
+				end)
+			
+			
+			end )
+		
+	
+			
+			self:addOption("Oh okay! Thank you, but no thank you.", function ()
+				self:addText("Come back any time you want to make an account!")
+				self:addLeave("<Leave>")
+				
+			end)
 end
-
 
 function NPC:addDText( s , t )
 
+	timer.Simple( t , function ( )
 	
-	self:addText( s )
+		self:addText( s )
 		
+	end)
 	
 end
-
 
 function NPC:MakeBankAccount( int )
 	if int == 0 then
@@ -144,39 +173,32 @@ function NPC:MakeBankAccount( int )
 	
 		if LocalPlayer():getBankAccount() != 1 then
 			self:addOption( "The Smart Savings account.", function ( )
-
-				timer.Simple(1,function()
-					if !self then return end
-					self:smartSavings()
-				end)
-
+				self:smartSavings()
 			end )
 		end
 		if LocalPlayer():getBankAccount() != 2 then
 			self:addOption( "The Chequing Supreme account.", function ( )
 
-				timer.Simple(1,function()
-					if !self then return end
-					self:chequingSupreme()
-				end)
+				self:chequingSupreme()
 			end )
 		end
 		if LocalPlayer():getBankAccount() != 3 then
 			self:addOption( "The Buisiness account.", function ( )
 			
-				timer.Simple(1,function()
-					if !self then return end
-					self:buisinessAccount()
-				end)
+				self:buisinessAccount()
 			end )
 		end
-	
-end)
+	end)
+
 end
 function NPC:smartSavings()
 		
-		self:addText( "You make " .. ((fsrp.config.atmfeesurcharge[1][1])*100).."% of your bank account each payday, and you pay $" .. fsrp.config.atmfeesurcharge[1][3].." of your cheque to us. Withdrawing cash costs you "..((fsrp.config.atmfeesurcharge[1][2])*100).."% of the amount.")
+		self:addText( "Sure enough our smart savings account is for those who take out rarely but want lots of interest paid every payday!" )
+			
+		self:addDText( "You make 0.2% of your bank account each payday, and you pay $15 of your cheque to us.", 2)
+		self:addDText( "Withdrawing cash costs you 7.5% of the amount.", 4)
 		
+		timer.Simple( 4, function()
 			self:addOption( "I would like to chose this account", function( )
 				self:AccquireAccount( 1 )
 			end )
@@ -184,12 +206,16 @@ function NPC:smartSavings()
 			self:addOption( "I would like to know about another account" , function ( )
 				self:MakeBankAccount( 1 )	
 			end)
+		end)
 end
 function NPC:chequingSupreme()
 		
+		self:addText( "Sure enough our chequing supreme account is for those who buy lots!" )
 			
-			self:addText( "You make " .. ((fsrp.config.atmfeesurcharge[2][1])*100).."% of your bank account each payday, and you pay $" .. fsrp.config.atmfeesurcharge[2][3].." of your cheque to us. Withdrawing cash costs you " .. ((fsrp.config.atmfeesurcharge[2][2])*100).."% of the amount.")
+		self:addDText( "You make 0.1% of your bank account each payday, and you pay $10 of your cheque to us.", 2)
+		self:addDText( "Withdrawing cash costs you 0% of the amount.", 4)
 		
+		timer.Simple( 4, function()
 			self:addOption( "I would like to chose this account", function( )
 				self:AccquireAccount( 2 )
 			end )
@@ -197,13 +223,17 @@ function NPC:chequingSupreme()
 			self:addOption( "I would like to know about another account" , function ( )
 				self:MakeBankAccount( 1 )	
 			end)
+		end)
 		
 end
-
 function NPC:buisinessAccount()
-					
-		self:addText( "You make "..((fsrp.config.atmfeesurcharge[3][1])*100).."% of your bank account each payday, and you pay $" .. fsrp.config.atmfeesurcharge[3][3].." of your cheque to us. Withdrawing cash costs you "..((fsrp.config.atmfeesurcharge[3][2])*100).."% of the amount.")
 		
+		self:addText( "Our Buisiness account is for investors looking to make profit with their cash!" )
+			
+		self:addDText( "You make 0.2% of your bank account each payday, and you pay $30 of your cheque to us.", 2)
+		self:addDText( "Withdrawing cash costs you 5% of the amount.", 4)
+		
+		timer.Simple( 4, function()
 			self:addOption( "I would like to chose this account", function( )
 				self:AccquireAccount( 3 )
 			end )
@@ -211,25 +241,21 @@ function NPC:buisinessAccount()
 			self:addOption( "I would like to know about another account" , function ( )
 				self:MakeBankAccount( 1 )	
 			end)
+		end)
 		
 end
+
 function NPC:AccquireAccount( int )
 
-				timer.Simple(1,function()
-					if !self then return end
 	self:addText("We can set that up for you, just give me a second to get your information in our database")
 	
 	self:send("setbankaccountType", int )
-
-				timer.Simple(1,function()
-					if !self then return end
-	self:addText("Ok we are done.", 1)
-end)
+	self:addDText("Ok we are done.", 1)
 	timer.Simple( 2, function()
 		self:onStart( )
 	end )
-		
-	end)
+	
+
 end
 function NPC:SucceedTransfer( bool )
 	local _t
@@ -239,29 +265,22 @@ function NPC:SucceedTransfer( bool )
 		_t = "withdrawn"
 	end
 
-				timer.Simple(1,function()
-					if !self then return end
 	self:addText( "Awesome! We have successfully " .. _t .. " your money. Is there anything else we can do for you?" )
 
 	self:addOption( "I would like to do something else.", function( )
 	
-				timer.Simple(1,function()
-					if !self then return end
-		self:CheckBankProceed( 1 )
-		end)
+		self:onStart()
+		
 	end )
 	
 	self:addOption("Thank you, I have to go.", function()
-				
-				timer.Simple(1,function()
-					if !self then return end		
+						
 		self:addText("Sure! Please check out what we can do for you!" )
-		end)
 		-- self:addLeave(<leave text>) adds a button that closes the dialogue.
 		self:addLeave("<Leave>")
 					
 	end )
-	end)
+	
 end
 
 function NPC:CheckBank( )
@@ -270,12 +289,9 @@ function NPC:CheckBank( )
 	self:addOption( "<Proceed>", function( )
 	
 		self:addText("Awesome! Thank you, I will be just a second.")
-
-		timer.Simple(.1,function()
-			if !self then return end
-			self:CheckBankProceed( _i )
+		
+		self:CheckBankProceed( _i )
 		_i = 0;
-			end)
 	end )
 
 
@@ -285,9 +301,9 @@ function NPC:CheckBankProceed( int )
 	local _typeac = "";
 
 	if int == 1 then
-		timer.Simple(1,function()
-			if !self then return end
-			self:addText("Your current balance in your bank is $" ..math.Round( LocalPlayer():getBank( ) ,2).. ".")
+		timer.Simple( 2, function()
+		
+			self:addText("Okay here we go, your current balance in your bank is $" .. LocalPlayer():getBank( ) .. ".")
 			
 			if LocalPlayer():getBankAccount() == 1 then
 			
@@ -300,17 +316,15 @@ function NPC:CheckBankProceed( int )
 				_typeac = "You have a Buisiness Account.";
 				
 			end
-
-			timer.Simple(3 , function()
-					if !self then return end
 				self:addText(_typeac );
-		
-				//self:addText("What would you like to do? (You have $" .. math.Round(LocalPlayer():getMoney(),2) .. ")")
+
+			timer.Simple( 2 , function()
+			
+				self:addText("What would you like to do? (You have $" .. LocalPlayer():getMoney() .. ")")
 				
 				self:addOption( "I would like to deposit..", function( )
 					local depTbl = { 
 						{name = "$1,000", amt = 1000},
-						{name = "$5,000", amt = 5000},
 						{name = "$10,000", amt = 10000},
 						{name = "$25,000", amt = 25000},
 						{name = "$50,000", amt = 50000},		
@@ -442,7 +456,9 @@ function NPC:CheckBankProceed( int )
 			
 					self:addOption("I have changed my mind.", function()
 						
-						self:CheckBankProceed( 1 )
+						self:addText("Sure! Don't forget to come back! We offer increased rewards for people who sign up with us!" )
+						-- self:addLeave(<leave text>) adds a button that closes the dialogue.
+						self:addLeave("<Leave>")
 					
 					end )
 				
@@ -456,17 +472,13 @@ function NPC:CheckBankProceed( int )
 					
 				end )
 			
-			
 			end )
 			
-		end)
 		
-		 
+		end )
 		else
-			local _typeac = "You have a Smart Savings Account."
-		timer.Simple(3,function()
-			if !self then return end
-			self:addText("Your current balance in your bank is $" ..math.Round( LocalPlayer():getBank( ) ,2).. ".")
+		
+			self:addText("Your current balance in your bank is $" .. LocalPlayer():getBank( ) .. ".")
 			
 			if LocalPlayer():getBankAccount() == 1 then
 			
@@ -479,12 +491,11 @@ function NPC:CheckBankProceed( int )
 				_typeac = "You have a Buisiness Account.";
 				
 			end
-
-			timer.Simple(1 , function()
 				self:addText(_typeac );
+
+			timer.Simple( 1 , function()
 			
-			
-				//self:addText("What would you like to do? (You have $" .. math.Round( LocalPlayer():getMoney(),2) .. ")")
+				self:addText("What would you like to do? (You have $" .. LocalPlayer():getMoney() .. ")")
 				
 				self:addOption( "I would like to deposit..", function( )
 					local depTbl = { 
@@ -563,8 +574,10 @@ function NPC:CheckBankProceed( int )
 			
 					self:addOption("I have changed my mind.", function()
 						
-						self:CheckBankProceed(1)
-
+						self:addText("Sure! Don't forget to come back! We offer increased rewards for people who sign up with us!" )
+						-- self:addLeave(<leave text>) adds a button that closes the dialogue.
+						self:addLeave("<Leave>")
+					
 					end )
 				
 				end)
@@ -577,11 +590,145 @@ function NPC:CheckBankProceed( int )
 					
 				end )
 			
-			 
 			end )
 			
-		end)
 		
 		end
+	end
+
+function NPC:BuisinessOwner( )
+
+	self:addOption("(Buisiness) I would like to check...", function()
+			
+		self:addOption("My Net Worth.", function() 
+		
+			self:addText("Sure, your current net worth is $" .. LocalPlayer():getShares(2).value .. "!" )
+			
+			self:addOption("I would like to check out something else.", function()
+				talkedTo = true
+				self:onStart()
+				
+			end )
+			
+			self:addOption("Thank you, I have to go.", function()
+				
+				self:addText("Sure! Don't forget to come back!" )
+				-- self:addLeave(<leave text>) adds a button that closes the dialogue.
+				self:addLeave("<Leave>")
+			
+			end )
+			
+		end )
+		
+		self:addOption("My Buisiness Level.", function() 
+			
+			self:addText("Sure thing, the current level of your buisiness is: " .. LocalPlayer():getShares(2).level .. "!" )
+			
+			self:addText("Your XP is sitting at: " .. LocalPlayer():getShares(3).xp .. "!" )
+			self:addOption("I would like to check out something else.", function()
+				talkedTo = true
+				self:onStart()
+				
+			end )
+			
+			self:addOption("Thank you, I have to go.", function()
+				
+				self:addText("Sure! Don't forget to come back!" )
+				-- self:addLeave(<leave text>) adds a button that closes the dialogue.
+				self:addLeave("<Leave>")
+			
+			end )
+			
+		end )
+		
+		self:addOption("The Amount of shares I own.", function() 
+			
+			self:addText("Sure, your current amount of shares is x" .. LocalPlayer():getShares(2).shares .. "!" )
+			
+			self:addOption("I would like to check out something else.", function()
+				talkedTo = true
+				self:onStart()
+				
+			end )
+			
+			self:addOption("Thank you, I have to go.", function()
+				
+				self:addText("Sure! Don't forget to come back!" )
+				-- self:addLeave(<leave text>) adds a button that closes the dialogue.
+				self:addLeave("<Leave>")
+			
+			end )
+			
+		end )
+		
+	end )
+	
+	self:addOption( "(Buisiness) I would like to buy some shares.", function() 
+		
+		self:onBuy()
+		
+	end )
+	
+end
+
+function NPC:onBuy()
+	
+	local _newTbl = {}
+	local _plyTbl = LocalPlayer():getShares(1);
+	
+	for k , v in pairs( BUISINESS_TABLE ) do
+		if v.ID == 2 then 
+		
+			_newTbl.cost = v.Price
+			_newTbl.shares = v.Shares
+			
+		end
+		
+	end
+	
+	local shareBuyTbl = {
+	
+		{name = "1x Share",amt = 1 },
+		{name = "5x Shares" ,amt = 5 },
+		{name = "10x Shares" ,amt = 10 },
+		}
+	
+	self:addText("Sure, your current amount of shares is x" .. _plyTbl.shares .. "!" )
+		
+	for k , v in pairs( shareBuyTbl ) do
+		
+		if LocalPlayer():canAffordBank( _newTbl.cost * v.amt )&& LocalPlayer():getShares( 2).shares + v.amt <= MAX_BANK_SHARES then 
+		
+		self:addOption( v.name , function()
+
+			net.Start("buybankMarketShare")
+				net.WriteInt( v.amt, 5  )
+			net.SendToServer()
+			
+			self:addText( "You have bought x" .. v.amt .. " Bank Shares!" )
+			
+			self:addOption("I would like to buy more shares!", function()
+				self:onBuy()
+			end )
+			
+			self:addOption("Thank you!", function()
+				self:addText("Sure! Don't forget to come back!" )
+				self:addLeave("<Leave>")
+			end )
+			
+		end )
+		else
+		
+			LocalPlayer():Notify("You do not have enough money to buy any shares!");
+			break;
+		end
+		
+	end
+	
+	self:addOption("I have changed my mind.", function()
+		self:addText("Sure! Don't forget to come back!" )
+		-- self:addLeave(<leave text>) adds a button that closes the dialogue.
+		self:addLeave("<Leave>")
+	end )
 	
 end
