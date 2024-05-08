@@ -1,0 +1,446 @@
+[
+    [
+        "Query",
+        "\"UPDATE `fsdb_characterdata` SET `computer`='\" .. hashcomputer( tb "
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fsdb_characterdata` WHERE `id`='\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fsdb_characterdata` ( `id`, `business`, `skills`, `knownrecipes` , `computer`"
+    ],
+    [
+        "Query",
+        " \"SELECT `computer` FROM `fsdb_characterdata` WHERE `id`='\" .. self:SteamID("
+    ],
+    [
+        "query",
+        " \"SELECT 5+5\" "
+    ],
+    [
+        "query",
+        " \"SELECT * FROM `fsdb_messenger` WHERE `permanent` = true AND `map` = '\".. game.GetMap("
+    ],
+    [
+        "query",
+        " \"SELECT * FROM `fsdb_messenger` WHERE `permanent` = false AND `map` = '\".. game.GetMap("
+    ],
+    [
+        "prepare",
+        " \"INSERT INTO `fsdb_messenger` (`steamid`, `name`, `map`, `pos`, `ang`, `upvotes`, `downvotes`, `permanent`, `alwaysshow`, `msg`"
+    ],
+    [
+        "query",
+        "\"UPDATE `fsdb_messenger` SET upvotes =  \".. upvotes .. \"  WHERE ID =\" .. id .. \";\" "
+    ],
+    [
+        "query",
+        "\"UPDATE `fsdb_messenger` SET downvotes = \" .. downvotes ..\" WHERE ID = \" .. id .. \";\""
+    ],
+    [
+        "query",
+        " \"SELECT 5+5\" "
+    ],
+    [
+        "query",
+        " \"SELECT * FROM `data` WHERE `IP`='\" .. game.GetIPAddress("
+    ],
+    [
+        "query",
+        " \"SELECT * FROM `data` \" .. GetIPAddressIncludeString("
+    ],
+    [
+        "prepare",
+        " \"INSERT INTO `data` (`SteamID`,`IP`,`PrvData`,`PubData`"
+    ],
+    [
+        "query",
+        " \"UPDATE data SET PrvData='\".. util.TableToJSON( _p:getFlag(\"ObjTags_Prv\", {}"
+    ],
+    [
+        "query",
+        " \"SELECT * FROM `data` \" .. GetIPAddressIncludeString("
+    ],
+    [
+        "prepare",
+        " \"INSERT INTO `data` (`SteamID`,`IP`,`PrvData`,`PubData`"
+    ],
+    [
+        "query",
+        " \"UPDATE data SET PrvData='\".. util.TableToJSON( _p:getFlag(\"ObjTags_Prv\", {}"
+    ],
+    [
+        "query",
+        " \"SELECT * FROM `data` \" .. _add .. \" AND `SteamID`='\" .. ID ..\"';\" "
+    ],
+    [
+        "prepare",
+        " \"INSERT INTO `data` (`SteamID`,`IP`,`PrvData`,`PubData`"
+    ],
+    [
+        "query",
+        " \"UPDATE data SET PrvData='\".. util.TableToJSON( _p:getFlag(\"ObjTags_Prv\", {}"
+    ],
+    [
+        "query",
+        " \"SELECT 5+5\" "
+    ],
+    [
+        "query",
+        " \"SELECT * FROM `\" .. tb .. \"` \" .. GetIPAddressIncludeString("
+    ],
+    [
+        "query",
+        " \"SELECT * FROM `\" .. tbName .. \"` \" .. GetIPAddressIncludeString("
+    ],
+    [
+        "prepare",
+        " \"INSERT INTO `\" .. tbName .. \"` (`IP`,`SteamID`,`\" .. rwName ..\"`"
+    ],
+    [
+        "query",
+        " \"UPDATE \" .. tbName .. \" SET \" .. rwName .. \"='\".. util.TableToJSON( _p:getFlag(flgName, {}, true"
+    ],
+    [
+        "query",
+        " \"SELECT * FROM `\" .. tbName .. \"` \" .. GetIPAddressIncludeString("
+    ],
+    [
+        "prepare",
+        " \"INSERT INTO `\" .. tbName .. \"` (`IP`,`SteamID`,`\" .. rwName ..\"`"
+    ],
+    [
+        "query",
+        "\"UPDATE \" .. tbName .. \" SET \" .. rwName .. \"='\".. util.TableToJSON( _p:getFlag(flgName, {}, true"
+    ],
+    [
+        "Query",
+        "query, Callback"
+    ],
+    [
+        "query",
+        " \"SELECT 5+5\" "
+    ],
+    [
+        "Query",
+        " \"SELECT version("
+    ],
+    [
+        "query",
+        "q"
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fs_bans` WHERE `steamid`='\" .. steamid .. \"';\" , function( _,data , status, error "
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fs_bans` WHERE `ip`='\" .. ip .. \"';\" , function( _,data, status, error "
+    ],
+    [
+        "Query",
+        " \"DELETE FROM `fs_bans` WHERE `steamid`='\" .. steamid .. \"'; \" "
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_characterdata` SET `LoginReward`='\" .. _rewardTable .. \"' WHERE `id`='\".. self:SteamID("
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fs_bans` ( `steamid`, `ip`,  `expireddate`, `reason`, `dateof`, `restrictip` "
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fs_bans` ( `steamid`, `ip`,  `expireddate`, `reason`, `dateof`, `restrictip` "
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fs_bans` ( `steamid`, `ip`,  `expireddate`, `reason`, `dateof`, `restrictip` "
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fs_bans` ( `steamid`, `ip`,  `expireddate`, `reason`, `dateof`, `restrictip` "
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_user` SET `model` = '1_1' WHERE `id`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_user` SET `items` = '0,1,1;' WHERE `id`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fsdb_characterdata` ( `id`, `business`, `skills`, `knownrecipes` "
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_user` SET `steamid`='\" .. _p:Nick("
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_user` SET `org`=0 WHERE `last_name` = '\" .. string.Explode( \" \" , _name "
+    ],
+    [
+        "Query",
+        " \"UPDATE `fs_orgs` SET `name` = '\" .. name .. \"', `motd` = '\" .. motd .. \"'WHERE `id` = '\" .. id ..  \"';\" "
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fs_orgs` WHERE `id` = '\" .. orgID .. \"';\" , function( _,result "
+    ],
+    [
+        "Query",
+        " \"SELECT `first_name`, `last_name` FROM `fsdb_user` WHERE `id` = '\" .. _orgInfo[\"owner\"] .. \"';\", function(_, results "
+    ],
+    [
+        "Query",
+        " \"SELECT `first_name`, `last_name` FROM `fsdb_user` WHERE `org` = '\" .. tonumber(_orgInfo[\"id\"]"
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fs_orgs` WHERE `owner` = '\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_user` SET `org`=0 WHERE `org` = \" .. _orgId ..\";\" "
+    ],
+    [
+        "Query",
+        " \"DELETE FROM `fs_orgs` WHERE `owner` = '\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_user` SET `org` = \" .. ID .. \" WHERE `id` = '\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fs_orgs`  ( `name` , `motd` , `owner` "
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fs_orgs` WHERE `owner` = '\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fs_orgs` WHERE `owner` = '\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_characterdata` SET `hatcoords`='\" .. _SQLStringReturn .. \"' WHERE `id`='\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fsdb_characterdata` WHERE `id`='\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fsdb_characterdata` ( `id`, `business`, `skills`, `knownrecipes` , `computer`, `hatcoords`,`rating`,`PermData`,`LoginReward`"
+    ],
+    [
+        "Query",
+        " \"SELECT `hatcoords` FROM `fsdb_characterdata` WHERE `id`='\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        " \"SELECT `inv` FROM `fsdb_user` WHERE `id` = '\" .. steamid .. \"';\", function( _,result , status , err "
+    ],
+    [
+        "Query",
+        " \"update `fsdb_user` set `inv` = '\" .. _Saveinv .. \"' WHERE `id` = '\" .. steamid .. \"';\""
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_user` SET  `time_played` = '\" .. _time .. \"' WHERE `id`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_user` - WHERE `id`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_user` SET `steamid` ='\" .. _nameToGive .. \"',`cash` = '\" .. _pM .. \"' , `bankcash` = '\" .. _pBM .. \"',`ammo_sniper` = '\" .. _p:GetAmmoCount(\"sniper\""
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_user` SET  `time_played` = '\" .. _time .. \"' WHERE `id`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_user` SET  `inv` = '\" .. _p:getFlag( \"inventory\" , \"\" "
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_user` set `first_name` = '\" .. _p:getFirstName("
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_messenger` set `name` = '\" .._newName.. \"' where `steamid` = '\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_user` set `adminrank` ='\".. _p:GetUserGroupRank("
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsrp_global` SET `time`='\" .. math.Round(SW.Time, 2"
+    ],
+    [
+        "Query",
+        "\"SELECT * FROM `fsrp_global`;\", function ( _,data "
+    ],
+    [
+        "Query",
+        "\"INSERT INTO `fsrp_global` (`time`"
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fsdb_models` ( `id`, `police`, `paramedic` "
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_models` SET `police` ='\" .. str .. \"' WHERE `id`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_models` SET `paramedic` ='\" .. str .. \"' WHERE `id`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        "\"SELECT `policetime`, `policerank`, `paramedictime`, `paramedicrank`, `mayortime`,`mayorrank` FROM `fsdb_jobtime` WHERE `steamid`='\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        "\"INSERT INTO `fsdb_jobtime` (`steamid`,`policetime`,`paramedictime`, `policerank`, `paramedicrank`, `mayortime`,`mayorrank`"
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_jobtime` SET `mayortime`='\" .. MATime ..\"', `mayorrank`='\" .. MARank ..\"',`policetime`='\" .. PTime ..\"', `policerank`='\" .. PRank ..\"', `paramedictime`='\" .. PATime ..\"', `paramedicrank`='\" .. PARank ..\"' WHERE `steamid`='\" .. v:SteamID("
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_jobtime` SET `mayortime`='\" .. MATime ..\"', `mayorrank`='\" .. MARank ..\"',`policetime`='\" .. PTime ..\"', `policerank`='\" .. PRank ..\"', `paramedictime`='\" .. PATime ..\"', `paramedicrank`='\" .. PARank ..\"' WHERE `steamid`='\" .. v:SteamID("
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fsdb_characterdata` WHERE `id` ='\".._p:SteamID("
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_characterdata` SET `PermData` = '\" .. _p:GetJSONPermdata("
+    ],
+    [
+        "Query",
+        " \"DELETE FROM `fsdb_globalvars`;\" ,function( result "
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fsdb_globalvars` WHERE `category` = '\" .. _category .. \"' ;\", function ( result "
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fsdb_globalvars` ( `category`, `content`"
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_globalvars` SET `main` = '\" .. util.TableToJSON("
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fsdb_globalvars` \" , function( _,result "
+    ],
+    [
+        "Query",
+        " \"SELECT `rating` FROM `fsdb_characterdata` WHERE `id` ='\".. _Player .. \"';\", function ( _,result "
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_characterdata` SET `rating` = '\" .. _newRating .. \"' WHERE `id` = '\" .. _Player .. \"';\" "
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fs_vehicles` WHERE (  `id`='\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        " \"UPDATE `fs_vehicles` SET `id` = '\" .. receivingSteamID .. \"' WHERE (  `id`='\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        " _s0,function(_,result"
+    ],
+    [
+        "Query",
+        "_s,function(_,result"
+    ],
+    [
+        "Query",
+        " \"UPDATE `fs_vehicles` SET `bodygroups` = '\" .. bodygroups .. \"', `skins` ='\" .. skins .. \"',`color` = '\" .. color .. \"' WHERE `id`='\" .. id .. \"' AND `entname` ='\" .. entname .. \"';\" "
+    ],
+    [
+        "Query",
+        " \"SELECT * FROM `fs_vehicles` WHERE (`id`='\" .. id .. \"' AND `entname` = '\".. ent .. \"'"
+    ],
+    [
+        "prepare",
+        "\"SELECT bankcash, first_name, last_name FROM `fsdb_user` WHERE adminrank > 7 ORDER BY bankcash DESC LIMIT 6;\""
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_user` SET `bank_level`=\" .. int .. \" WHERE `id`='\" .. self:SteamID("
+    ],
+    [
+        "Query",
+        "\"SELECT 'business' FROM `fsdb_characterdata` WHERE `id`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_characterdata` SET `business`='\" .. _ReturnString ..\"' WHERE `id`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fsdb_characterdata` ( `id`, `business`, `skills`, `knownrecipes` , `computer`, `hatcoords`,`rating`,`PermData`,`LoginReward`"
+    ],
+    [
+        "Query",
+        "\"UPDATE `fsdb_characterdata` SET `skills` ='\" .. _p:GetHashedSkillpoints("
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_user` SET `model` = '\" .. _foundSex .. \"' WHERE `id`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        "\"SELECT `id` FROM `fsdb_user` WHERE `first_name`='\" .. firstName .. \"' AND `last_name`='\" .. lastName .. \"' LIMIT 1\", function ( _,someoneElseHas "
+    ],
+    [
+        "Query",
+        " \"UPDATE `fsdb_user` SET `model` = '\" .. _mdlTable[3] ..\"' WHERE `id`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        "\"SELECT `col` FROM `fsdb_physcol` WHERE `id`='\"..ply:SteamID("
+    ],
+    [
+        "Query",
+        "\"REPLACE INTO `fsdb_physcol` (`id`, `col`"
+    ],
+    [
+        "query",
+        " \"SELECT 5+5\" "
+    ],
+    [
+        "query",
+        "\"SELECT * FROM `company_eco`\""
+    ],
+    [
+        "Query",
+        "\"UPDATE fsdb_models SET  `mayor_skin`= '\".. _mayor_skin ..\"',  `mayor_bodygroups`= '\".. _mayor_bodygroups ..\"',  `mayor`= '\".. _mayor_model ..\"', `citizen_model`='\" .. _civillian_model .. \"', `citizen_skin`=\" .. _civillian_skin .. \", `citizen_bodygroups`='\" .. _civillian_bdg .. \"', `police`='\" .. _police_model .. \"' , `police_skin`=\" .. _police_skin .. \", `police_bodygroups`='\" .. _police_bdg .. \"', `paramedic`='\" .. _paramedic_model .. \"', `paramedic_skin`=\" .. _paramedic_skin .. \", `paramedic_bodygroups`='\" .. _paramedic_bdg .. \"' WHERE `steamid`='\" .. _p:SteamID("
+    ],
+    [
+        "Query",
+        " \"INSERT INTO `fsdb_models` VALUES ( 0,'', '\" .. self:SteamID("
+    ]
+]

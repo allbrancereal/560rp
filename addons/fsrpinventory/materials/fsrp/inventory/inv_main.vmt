@@ -1,0 +1,9 @@
+"UnlitGeneric" 
+{ 
+	"$basetexture" "fsrp/inventory/inv_main"
+	"$vertexcolor" 1 
+	"$vertexalpha" 1 
+	"$nolod" 1
+	"$ignorez" 1
+	"$translucent" 1
+} 
