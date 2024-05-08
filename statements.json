@@ -14,7 +14,7 @@
     [
         "Query",
         " \"SELECT `computer` FROM `fsdb_characterdata` WHERE `id`='\" .. self:SteamID("
-    ],
+    ], 
     [
         "query",
         " \"SELECT 5+5\" "
