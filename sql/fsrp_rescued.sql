@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 30, 2017 at 10:32 AM
--- Server version: 5.6.37
--- PHP Version: 7.0.23
+-- Generation Time: May 10, 2024 at 11:08 AM
+-- Server version: 5.7.41
+-- PHP Version: 8.1.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,59 +18,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `rotospacest_gamemode`
+-- Database: `fsrp_core`
 --
-CREATE DATABASE IF NOT EXISTS `rotospacest_gamemode` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `rotospacest_gamemode`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `fs_bans`
---
-
-CREATE TABLE `fs_bans` (
-  `steamid` text NOT NULL,
-  `ip` text NOT NULL,
-  `expireddate` int(64) NOT NULL,
-  `reason` text NOT NULL,
-  `dateof` int(64) NOT NULL,
-  `restrictip` tinyint(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `fs_orgs`
---
-
-CREATE TABLE `fs_orgs` (
-  `id` int(11) NOT NULL,
-  `name` text NOT NULL,
-  `motd` text NOT NULL,
-  `owner` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-CREATE TABLE playerTags (
-    SteamID TEXT,
-    PrvTags TEXT,
-    PubTags TEXT
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `fs_vehicles`
---
-
-CREATE TABLE `fs_vehicles` (
-  `id` text NOT NULL,
-  `entname` text NOT NULL,
-  `bodygroups` text NOT NULL,
-  `skins` int(11) NOT NULL,
-  `color` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -104,6 +52,16 @@ CREATE TABLE `fsdb_cooldowns` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fsdb_eco`
+--
+
+CREATE TABLE `fsdb_eco` (
+  `data` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `fsdb_jobtime`
 --
 
@@ -113,6 +71,26 @@ CREATE TABLE `fsdb_jobtime` (
   `policerank` int(6) UNSIGNED ZEROFILL NOT NULL DEFAULT '000000',
   `paramedictime` bigint(20) NOT NULL,
   `paramedicrank` int(6) UNSIGNED ZEROFILL NOT NULL DEFAULT '000000'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fsdb_messenger`
+--
+
+CREATE TABLE `fsdb_messenger` (
+  `ID` int(11) NOT NULL,
+  `steamid` text NOT NULL,
+  `name` text NOT NULL,
+  `map` text NOT NULL,
+  `pos` text NOT NULL,
+  `ang` text NOT NULL,
+  `upvotes` bigint(20) NOT NULL,
+  `downvotes` bigint(20) NOT NULL,
+  `permanent` tinyint(1) NOT NULL,
+  `alwaysshow` tinyint(1) NOT NULL,
+  `msg` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -149,18 +127,6 @@ CREATE TABLE `fsdb_physcol` (
   `id` text NOT NULL,
   `col` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-CREATE TABLE fsdb_messenger (
-    steamid TEXT NOT NULL,
-    name TEXT NOT NULL,
-    map TEXT NOT NULL DEFAULT 'unknown',
-    pos TEXT NOT NULL DEFAULT '0,0,0',
-    ang TEXT NOT NULL DEFAULT '0,0,0',
-    permanent BOOLEAN NOT NULL DEFAULT false,
-    alwaysshow BOOLEAN NOT NULL DEFAULT false,
-    sentence TEXT NOT NULL
-);
 
 -- --------------------------------------------------------
 
@@ -203,21 +169,75 @@ CREATE TABLE `fsrp_global` (
   `businessinfo` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fs_bans`
+--
+
+CREATE TABLE `fs_bans` (
+  `steamid` text NOT NULL,
+  `ip` text NOT NULL,
+  `expireddate` int(64) NOT NULL,
+  `reason` text NOT NULL,
+  `dateof` int(64) NOT NULL,
+  `restrictip` tinyint(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fs_orgs`
+--
+
+CREATE TABLE `fs_orgs` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `motd` text NOT NULL,
+  `owner` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fs_vehicles`
+--
+
+CREATE TABLE `fs_vehicles` (
+  `id` text NOT NULL,
+  `entname` text NOT NULL,
+  `bodygroups` text NOT NULL,
+  `skins` int(11) NOT NULL,
+  `color` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `playerTags`
+--
+
+CREATE TABLE `playerTags` (
+  `SteamID` text,
+  `PrvTags` text,
+  `PubTags` text
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Reputation`
+--
+
+CREATE TABLE `Reputation` (
+  `IP` text NOT NULL,
+  `SteamID` text NOT NULL,
+  `ReputationData` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `fs_bans`
---
-ALTER TABLE `fs_bans`
-  ADD PRIMARY KEY (`steamid`(15));
-
---
--- Indexes for table `fs_orgs`
---
-ALTER TABLE `fs_orgs`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `fsdb_characterdata`
@@ -256,6 +276,18 @@ ALTER TABLE `fsdb_user`
   ADD PRIMARY KEY (`uid`,`id`(15),`steamid`(15));
 
 --
+-- Indexes for table `fs_bans`
+--
+ALTER TABLE `fs_bans`
+  ADD PRIMARY KEY (`steamid`(15));
+
+--
+-- Indexes for table `fs_orgs`
+--
+ALTER TABLE `fs_orgs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -263,60 +295,7 @@ ALTER TABLE `fsdb_user`
 -- AUTO_INCREMENT for table `fs_orgs`
 --
 ALTER TABLE `fs_orgs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;--
--- Database: `rotospacest_messages`
---
-CREATE DATABASE IF NOT EXISTS `rotospacest_messages` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `rotospacest_messages`;
-CREATE TABLE `playerTags` (
-    SteamID TEXT,
-    PrvTags TEXT,
-    PubTags TEXT
-);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `fsdb_messenger`
---
-
-CREATE TABLE `fsdb_messenger` (
-  `ID` int(11) NOT NULL,
-  `steamid` text NOT NULL,
-  `name` text NOT NULL,
-  `map` text NOT NULL,
-  `pos` text NOT NULL,
-  `ang` text NOT NULL,
-  `upvotes` bigint(20) NOT NULL,
-  `downvotes` bigint(20) NOT NULL,
-  `permanent` tinyint(1) NOT NULL,
-  `alwaysshow` tinyint(1) NOT NULL,
-  `msg` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `fsdb_messenger`
---
-ALTER TABLE `fsdb_messenger`
-  ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `fsdb_messenger`
---
-ALTER TABLE `fsdb_messenger`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;--
--- Database: `rotospacest_wiki`
---
-CREATE DATABASE IF NOT EXISTS `rotospacest_wiki` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `rotospacest_wiki`;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
