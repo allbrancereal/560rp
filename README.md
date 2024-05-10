@@ -1,4 +1,5 @@
 # 560rp gamemode
+https://knockout.chat/thread/61312/#post-2219271
 
 ## License
 
