@@ -18,12 +18,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `rotospacest_gamemode`
---
-CREATE DATABASE IF NOT EXISTS `rotospacest_gamemode` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `rotospacest_gamemode`;
-
 -- --------------------------------------------------------
 
 --
@@ -144,16 +138,6 @@ CREATE TABLE `fsdb_physcol` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE fsdb_messenger (
-    steamid TEXT NOT NULL,
-    name TEXT NOT NULL,
-    map TEXT NOT NULL DEFAULT 'unknown',
-    pos TEXT NOT NULL DEFAULT '0,0,0',
-    ang TEXT NOT NULL DEFAULT '0,0,0',
-    permanent BOOLEAN NOT NULL DEFAULT false,
-    alwaysshow BOOLEAN NOT NULL DEFAULT false,
-    sentence TEXT NOT NULL
-);
 
 -- --------------------------------------------------------
 
@@ -259,8 +243,6 @@ ALTER TABLE `fs_orgs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;--
 -- Database: `rotospacest_messages`
 --
-CREATE DATABASE IF NOT EXISTS `rotospacest_messages` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `rotospacest_messages`;
 CREATE TABLE `playerTags` (
     SteamID TEXT,
     PrvTags TEXT,
@@ -294,24 +276,6 @@ CREATE TABLE `fsdb_messenger` (
 --
 -- Indexes for table `fsdb_messenger`
 --
-ALTER TABLE `fsdb_messenger`
-  ADD PRIMARY KEY (`ID`);
-
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `fsdb_messenger`
---
-ALTER TABLE `fsdb_messenger`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;--
--- Database: `rotospacest_wiki`
---
-CREATE DATABASE IF NOT EXISTS `rotospacest_wiki` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `rotospacest_wiki`;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
