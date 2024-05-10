@@ -52,6 +52,13 @@ CREATE TABLE `fs_orgs` (
   `owner` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE playerTags (
+    SteamID TEXT,
+    PrvTags TEXT,
+    PubTags TEXT
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- --------------------------------------------------------
 
 --
