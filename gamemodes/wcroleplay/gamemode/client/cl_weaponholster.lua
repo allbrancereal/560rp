@@ -118,6 +118,7 @@ local function playerdrawdamnit(pl,legs)
                 if bol then continue; end
             end
             local PlayerWeapon = GetHolsteredWeaponTable(pl, v:GetClass()).Model;
+	    if not isentity(PlayerWeapon) then return end  -- Add this line
             local oldpl=pl;
             local wep=clgetweapon(oldpl, v:GetClass())
        
