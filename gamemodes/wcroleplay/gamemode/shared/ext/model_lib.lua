@@ -14,7 +14,7 @@ CAM_LOOK_AT[1] = Vector(-100, 10.8110811, 37.8378);
 CAM_LOOK_AT[1] = CAM_LOOK_AT[1];
 CAM_LOOK_AT[2] = CAM_LOOK_AT[2];
 
-Model = {}
+local Model = {}
 Model.__index = Model
 
 function Model:new(path, name)
@@ -168,6 +168,13 @@ function ExplodeModelInfo ( path )
 	newTable.id = tonumber(split[2]);
 	//fsrp.devprintTable( newTable );
 	return newTable;
+end
+function GM:PlayerSetModel(ply)
+	local modelData = ply:GetModel() 
+	ply:SetModel(modelData.path)
+	if modelData.hands then
+		ply:SetHandsModel(modelData.hands)
+	end
 end
 
 function iterateModelTable( gender, id )
